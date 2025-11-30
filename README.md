@@ -218,16 +218,7 @@ Typical costs:
 
 - [Amazon Bedrock Documentation](https://docs.aws.amazon.com/bedrock/)
 - [Claude Documentation](https://docs.anthropic.com/)
-- [AWS Builder Center Blog](https://community.aws/)
-
-## License
-
-MIT License - see [LICENSE](LICENSE) file
-
-## Contact
-
-- GitHub: [@yourusername](https://github.com/yourusername)
-- Email: your.email@example.com
+- [Building an AI-Powered Document Summarization System with Amazon Bedrock Blog]([https://community.aws/](https://builder.aws.com/content/36ClCWN67QPEjgbGXnkFvDuZHFY/building-an-ai-powered-document-summarization-system-with-amazon-bedrock))
 
 ---
 
