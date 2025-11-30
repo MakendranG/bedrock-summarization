@@ -89,20 +89,3 @@ if __name__ == "__main__":
     main()
 ```
 
----
-
-### File: `examples/sample.txt`
-```
-Amazon Reports Strong Q3 2024 Results Driven by AWS Growth
-
-Seattle, WA - Amazon.com, Inc. announced its financial results for the third quarter of 2024, showing robust performance across key business segments. The company reported net sales of $143.1 billion, representing a 13% year-over-year increase.
-
-Amazon Web Services (AWS), the company's cloud computing division, continued to be a major growth driver with revenue reaching $23.1 billion, up 12% from the same period last year. AWS operating income grew to $7.0 billion, demonstrating strong operational efficiency and customer demand for cloud services.
-
-"We're seeing continued momentum in our AWS business as customers of all sizes turn to the cloud to drive innovation and reduce costs," said Andy Jassy, Amazon CEO. "Our investments in generative AI capabilities, including Amazon Bedrock, are resonating strongly with enterprise customers."
-
-The retail segment also showed positive trends, with North American sales growing 9% to $87.9 billion and International sales increasing 12% to $32.1 billion. The company attributed this growth to improved delivery speeds, expanded product selection, and enhanced customer experience through AI-powered recommendations.
-
-However, Amazon faces ongoing challenges including increased competition in the cloud space from Microsoft Azure and Google Cloud Platform, regulatory scrutiny in multiple jurisdictions, and pressure to improve labor conditions in fulfillment centers. The company also announced plans to invest $10 billion in expanding its logistics network and AI infrastructure over the next two years.
-
-Looking ahead, Amazon provided guidance for Q4 2024, expecting net sales between $160 billion and $167 billion, reflecting the traditional holiday shopping season boost. The company remains optimistic about long-term growth opportunities in cloud computing, artificial intelligence, and e-commerce innovation.
