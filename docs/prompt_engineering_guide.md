@@ -171,5 +171,5 @@ Now review your summary and improve it to ensure:
 
 - [Anthropic Prompt Engineering Guide](https://docs.anthropic.com/claude/docs/intro-to-prompting)
 - [AWS Bedrock Best Practices](https://docs.aws.amazon.com/bedrock/)
-```
+
 
