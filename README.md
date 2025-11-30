@@ -21,7 +21,7 @@ An intelligent document summarization system built with Amazon Bedrock and Claud
 
 ```bash
 # Clone repository
-git clone https://github.com/yourusername/bedrock-summarization.git
+git clone https://github.com/MakendranG/bedrock-summarization.git
 cd bedrock-summarization
 
 # Install dependencies
