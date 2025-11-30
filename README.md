@@ -1,212 +1,234 @@
 # AWS Bedrock Document Summarization
 
-An intelligent document summarization system built with Amazon Bedrock and Claude, demonstrating advanced prompt engineering techniques for generating customized summaries.
+An intelligent document summarization system built with Amazon Bedrock and Claude 3.
 
 ## Features
 
-- 📝 **Multiple Summary Types**: One-sentence, short, structured, and personalized summaries
-- 🎯 **Role-Based Personalization**: Generate summaries tailored to specific roles (Financial Analyst, CTO, etc.)
-- 📊 **Structured Output**: Organize summaries by custom categories
-- 👶 **Reading Level Adaptation**: Simplify content for different audiences
-- ⚡ **Fast Processing**: Generate summaries in seconds
-- 🔧 **Easy Configuration**: Simple JSON-based configuration
-
-## Architecture
-
-The system uses Amazon Bedrock with Claude 3 Sonnet to generate summaries through carefully engineered prompts.
-```
-User Document → Prompt Templates → Amazon Bedrock → Formatted Summary
-```
+- 📝 Multiple summary types (one-sentence, short, structured, personalized)
+- 🎯 Role-based summaries for different audiences
+- 📊 Structured output with custom categories
+- ⚡ Fast processing (summaries in seconds)
+- 💻 Both CLI and Python API
 
 ## Prerequisites
 
 - Python 3.8+
 - AWS Account with Bedrock access
-- AWS CLI configured with appropriate credentials
-- Amazon Bedrock model access (Claude 3 Sonnet)
+- AWS CLI configured
+- Claude 3 Sonnet model access in Bedrock
 
 ## Installation
 
-1. Clone the repository:
 ```bash
+# Clone repository
 git clone https://github.com/yourusername/bedrock-summarization.git
 cd bedrock-summarization
-```
 
-2. Install dependencies:
-```bash
+# Install dependencies
 pip install -r requirements.txt
-```
 
-3. Configure AWS credentials:
-```bash
+# Configure AWS
 aws configure
 ```
 
-4. Request Amazon Bedrock model access:
-   - Go to AWS Console → Amazon Bedrock → Model Access
-   - Request access to Claude 3 Sonnet
+## Quick Start
 
-## Usage
-
-### Basic Summary
-```bash
-python summarizer.py --input sample.txt --type basic
-```
-
-### One-Sentence Summary
-```bash
-python summarizer.py --input sample.txt --type one-sentence
-```
-
-### Structured Summary
-```bash
-python summarizer.py --input sample.txt --type structured --sections "Pain Points,Positive Results,Growth Opportunities"
-```
-
-### Role-Based Summary
-```bash
-python summarizer.py --input sample.txt --type personalized --role "financial analyst"
-```
-
-### Simplified for Reading Level
-```bash
-python summarizer.py --input sample.txt --type simplified --level "third-grader"
-```
-
-## Python API Usage
 ```python
 from summarizer import DocumentSummarizer
 
-# Initialize summarizer
-summarizer = DocumentSummarizer(region='us-east-1')
+# Initialize
+summarizer = DocumentSummarizer()
+
+# Summarize
+document = "Your long document text here..."
+summary = summarizer.short_summary(document)
+print(summary)
+```
+
+## Usage
+
+### Command Line
+
+```bash
+# Basic summary
+python cli.py summarize --input article.txt --type short
+
+# One-sentence summary
+python cli.py summarize --input article.txt --type one-sentence
+
+# Structured summary
+python cli.py summarize --input article.txt --type structured --sections "Key Points,Challenges,Solutions"
+
+# Role-based summary
+python cli.py summarize --input article.txt --type personalized --role "financial analyst"
+
+# Save to file
+python cli.py summarize --input article.txt --type short --output summary.txt
+
+# Batch processing
+python cli.py batch --input-dir ./documents --output-dir ./summaries
+```
+
+### Python API
+
+```python
+from summarizer import DocumentSummarizer
+
+summarizer = DocumentSummarizer()
 
 # Load document
 with open('article.txt', 'r') as f:
     document = f.read()
 
-# Generate basic summary
-summary = summarizer.basic_summary(document)
-print(summary)
+# Different summary types
+basic = summarizer.basic_summary(document)
+one_liner = summarizer.one_sentence_summary(document)
+short = summarizer.short_summary(document)
 
-# Generate structured summary
+# Structured summary
 structured = summarizer.structured_summary(
     document,
-    sections=["Key Points", "Challenges", "Solutions"]
+    sections=["Key Points", "Challenges", "Opportunities"]
 )
-print(structured)
 
-# Generate role-based summary
-personalized = summarizer.personalized_summary(
+# Role-based summary
+financial = summarizer.personalized_summary(
     document,
-    role="CTO",
-    focus="technology innovations and developments"
+    role="financial analyst",
+    focus="profitability and growth"
 )
-print(personalized)
+
+# Simplified for reading level
+simple = summarizer.simplified_summary(document, "third-grader")
 ```
 
 ## Configuration
 
-Edit `config.json` to customize:
+Edit `config.json`:
+
 ```json
 {
   "model_id": "anthropic.claude-3-sonnet-20240229-v1:0",
   "region": "us-east-1",
   "max_tokens": 1024,
-  "temperature": 0.7,
-  "default_summary_type": "short"
+  "temperature": 0.7
 }
 ```
 
 ## Project Structure
+
 ```
 bedrock-summarization/
-├── README.md
-├── requirements.txt
-├── config.json
-├── summarizer.py          # Main summarization class
-├── prompt_templates.py    # Reusable prompt templates
-├── cli.py                 # Command-line interface
+├── summarizer.py           # Main summarization class
+├── prompt_templates.py     # Prompt templates
+├── cli.py                  # Command-line interface
+├── config.json             # Configuration
+├── requirements.txt        # Dependencies
 ├── examples/
+│   ├── demo.py            # Demo script
 │   ├── sample.txt         # Sample document
-│   └── demo.py            # Usage examples
-├── tests/
-│   └── test_summarizer.py
-└── docs/
-    └── prompt_engineering_guide.md
+│   └── batch_processing.py
+└── tests/
+    └── test_summarizer.py
 ```
 
 ## Examples
 
-See the `examples/` directory for complete working examples:
-- `basic_usage.py` - Simple summarization
-- `batch_processing.py` - Process multiple documents
-- `custom_prompts.py` - Create your own prompt templates
-- `web_integration.py` - Flask API wrapper
+### Financial Report
+
+```python
+report = "Q3 results show 15% revenue growth..."
+
+# For executives
+exec_summary = summarizer.personalized_summary(
+    report,
+    role="executive",
+    focus="key metrics"
+)
+
+# For investors
+investor_summary = summarizer.personalized_summary(
+    report,
+    role="investor",
+    focus="profitability trends"
+)
+```
+
+### Batch Processing
+
+```python
+from pathlib import Path
+
+def process_documents(input_dir, output_dir):
+    summarizer = DocumentSummarizer()
+    
+    for file in Path(input_dir).glob('*.txt'):
+        with open(file) as f:
+            doc = f.read()
+        
+        summary = summarizer.short_summary(doc)
+        
+        output = Path(output_dir) / f"{file.stem}_summary.txt"
+        output.write_text(summary)
+
+process_documents('./docs', './summaries')
+```
 
 ## Cost Estimation
 
-Amazon Bedrock pricing (Claude 3 Sonnet):
+Amazon Bedrock Pricing (Claude 3 Sonnet):
 - Input: $0.003 per 1K tokens
 - Output: $0.015 per 1K tokens
 
 Typical costs:
-- 1,000-word document summary: ~$0.01-0.02
-- 10,000 summaries/month: ~$100-200
-
-## Best Practices
-
-1. **Keep prompts clear and specific** - Well-defined instructions produce better results
-2. **Test different temperatures** - Lower (0.3-0.5) for consistency, higher (0.7-0.9) for creativity
-3. **Use structured formats** - Helps organize information and improves readability
-4. **Validate output** - Implement checks for summary quality and relevance
-5. **Monitor costs** - Track token usage to optimize spending
+- 1,000-word document: ~$0.006
+- 10,000 summaries/month: ~$60
 
 ## Troubleshooting
 
-**Issue**: `AccessDeniedException` when calling Bedrock
-- **Solution**: Ensure you've requested model access in the Bedrock console
+### AccessDeniedException
 
-**Issue**: Summaries are too long/short
-- **Solution**: Adjust `max_tokens` in config or be more specific in prompts
+**Solution**: 
+1. Check AWS credentials: `aws sts get-caller-identity`
+2. Verify Bedrock model access in AWS Console
+3. Ensure IAM permissions include `bedrock:InvokeModel`
 
-**Issue**: Poor quality summaries
-- **Solution**: Refine your prompts with more specific instructions and examples
+### Summaries too long/short
 
-## Contributing
+**Solution**: Adjust `max_tokens` or be more specific:
+```python
+"In exactly 2 sentences, summarize: {document}"
+```
 
-Contributions are welcome! Please:
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Submit a pull request
+### Slow responses
 
-## License
+**Solution**:
+- Reduce document length
+- Lower `max_tokens`
+- Check network latency
 
-MIT License - see LICENSE file for details
+## Best Practices
+
+1. **Document Preparation**: Remove formatting, clean whitespace
+2. **Prompt Engineering**: Start simple, then refine
+3. **Performance**: Cache summaries, use batch processing
+4. **Security**: Never commit credentials, use IAM roles
 
 ## Resources
 
 - [Amazon Bedrock Documentation](https://docs.aws.amazon.com/bedrock/)
-- [Claude Prompt Engineering Guide](https://docs.anthropic.com/claude/docs/intro-to-prompting)
-- [AWS Builder Center Blog Post](https://community.aws/content/your-article-link)
+- [Claude Documentation](https://docs.anthropic.com/)
+- [AWS Builder Center Blog](https://community.aws/)
 
-## Support
+## License
 
-For questions or issues:
-- Open a GitHub issue
-- Contact: your.email@example.com
-- AWS Support for Bedrock-specific issues
+MIT License - see [LICENSE](LICENSE) file
 
-## Acknowledgments
+## Contact
 
-Built as part of the AWS Prompt Engineering Workshop series.
-```
+- GitHub: [@yourusername](https://github.com/yourusername)
+- Email: your.email@example.com
 
 ---
 
-### File: `requirements.txt`
-```
-boto3>=1.34.0
-python-dotenv>=1.0.0
-click>=8.1.0
+⭐ Star this repo if you find it helpful!
